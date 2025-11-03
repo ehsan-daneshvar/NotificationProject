@@ -2,6 +2,7 @@
 using NotificationProject.Data;
 using NotificationProject.Models;
 using NotificationProject.Repository.IRepository;
+using static NotificationProject.Utilities.SD;
 
 namespace NotificationProject.Repository
 {
@@ -37,6 +38,32 @@ namespace NotificationProject.Repository
         {
             _db.Notifications.Update(notification);
             await _db.SaveChangesAsync();
+        }
+
+
+        public async Task<NotificationConfiguration?> GetNotificationConfigurationAsync()
+        {
+            return await _db.NotificationConfigurations.FirstOrDefaultAsync();
+        }
+
+        public async Task<NotificationConfiguration> SetNotificationConfigurationAsync(NotificationConfiguration notificationConfiguration)
+        {
+            var existing = await _db.NotificationConfigurations.FirstOrDefaultAsync();
+            if (existing == null)
+            {
+                await _db.NotificationConfigurations.AddAsync(notificationConfiguration);
+                await _db.SaveChangesAsync();
+                return notificationConfiguration;
+            }
+            else
+            {
+                existing.DefaultChannel = notificationConfiguration.DefaultChannel;
+                existing.UpdatedAt = DateTime.UtcNow;
+                _db.NotificationConfigurations.Update(existing);
+                await _db.SaveChangesAsync();
+                return existing;
+            }
+            
         }
     }
 }

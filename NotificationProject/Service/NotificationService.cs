@@ -21,7 +21,7 @@ namespace NotificationProject.Service
             _configuration = configuration;
         }
 
-        
+
 
         public async Task<Notification?> GetNotificationById(int Id)
         {
@@ -79,18 +79,36 @@ namespace NotificationProject.Service
 
         public async Task<NotificationChannel> GetDefaultNotificationChannel()
         {
+            var notificationConfiguration = await _notificationRepository.GetNotificationConfigurationAsync();
+            var defaultChannelFromConfiguration = notificationConfiguration != null ? notificationConfiguration.DefaultChannel : null;
+            if (Enum.TryParse<NotificationChannel>(defaultChannelFromConfiguration, true, out var d)) return d;
+
             var defaultChannel = _configuration.GetValue<string>("NotificationConfig:DefaultChannel");
-            if (Enum.TryParse<NotificationChannel>(defaultChannel, true, out var d)) return d;
+            if (Enum.TryParse<NotificationChannel>(defaultChannel, true, out var b)) return b;
 
             //If Default From appsettings is broken then return hard-coded chaneel 
             return NotificationChannel.Email;
         }
 
 
-        public Task ChangeDefaultNotificationChannelAsync(NotificationChannel notificationChannel)
+        public async Task ChangeDefaultNotificationChannelAsync(NotificationChannel notificationChannel)
         {
-            throw new NotImplementedException();
+            var existing = await _notificationRepository.GetNotificationConfigurationAsync();
+            if (existing != null)
+            {
+                existing.DefaultChannel = notificationChannel.ToString();
+                existing.UpdatedAt = DateTime.UtcNow;
+                await _notificationRepository.SetNotificationConfigurationAsync(existing);
+            }
+            else
+            {
+                NotificationConfiguration notificationConfiguration = new NotificationConfiguration()
+                {
+                    DefaultChannel = notificationChannel.ToString(),
+                    UpdatedAt = DateTime.UtcNow
+                };
+                await _notificationRepository.SetNotificationConfigurationAsync(notificationConfiguration);
+            }
         }
-
     }
 }

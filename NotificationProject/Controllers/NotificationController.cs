@@ -91,14 +91,14 @@ namespace NotificationProject.Controllers
         }
 
         // Change Default Notification Channel
-        [HttpPost("DefaultChannel", Name = "SendNotificationWithChannel")]
+        [HttpPost("DefaultChannel", Name = "ChangeDefaultNotificationChannel")]
         [ProducesResponseType(statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ChangeDefaultNotificationChannel([FromBody] NotificationChannel channel)
+        public async Task<IActionResult> ChangeDefaultNotificationChannel([FromQuery] NotificationChannel notificationChannel)
         {
             try
             {
-                var result = await _notificationService.ChangeDefaultNotificationChannelAsync(channel);
+                await _notificationService.ChangeDefaultNotificationChannelAsync(notificationChannel);
                 return Ok();
             }
             catch (Exception ex)

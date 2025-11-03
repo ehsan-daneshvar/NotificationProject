@@ -8,5 +8,8 @@ namespace NotificationProject.Repository.IRepository
         Task UpdateAsync(Notification notification);
         Task<Notification?> GetByIdAsync(int id);
         Task<IEnumerable<Notification>> QueryAsync(int? userId = null, int skip = 0, int take = 50);
+
+        Task<NotificationConfiguration?> GetNotificationConfigurationAsync();
+        Task<NotificationConfiguration> SetNotificationConfigurationAsync(NotificationConfiguration notificationConfiguration);
     }
 }

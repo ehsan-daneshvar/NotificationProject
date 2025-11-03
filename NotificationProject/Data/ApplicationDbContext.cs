@@ -8,6 +8,7 @@ namespace NotificationProject.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationConfiguration> NotificationConfigurations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,6 +21,7 @@ namespace NotificationProject.Data
                 //SQL Server
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
+
 
             base.OnModelCreating(modelBuilder);
         }
