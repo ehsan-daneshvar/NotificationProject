@@ -21,14 +21,7 @@ namespace NotificationProject.Service
             _configuration = configuration;
         }
 
-        public async Task<NotificationChannel> GetDefaultNotificationChannel()
-        {
-            var defaultChannel = _configuration.GetValue<string>("NotificationConfig:DefaultChannel");
-            if (Enum.TryParse<NotificationChannel>(defaultChannel, true, out var d)) return d;
-
-            //If Default From appsettings is broken then return hard-coded chaneel 
-            return NotificationChannel.Email;
-        }
+        
 
         public async Task<Notification?> GetNotificationById(int Id)
         {
@@ -83,5 +76,21 @@ namespace NotificationProject.Service
 
             return notification;
         }
+
+        public async Task<NotificationChannel> GetDefaultNotificationChannel()
+        {
+            var defaultChannel = _configuration.GetValue<string>("NotificationConfig:DefaultChannel");
+            if (Enum.TryParse<NotificationChannel>(defaultChannel, true, out var d)) return d;
+
+            //If Default From appsettings is broken then return hard-coded chaneel 
+            return NotificationChannel.Email;
+        }
+
+
+        public Task ChangeDefaultNotificationChannelAsync(NotificationChannel notificationChannel)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

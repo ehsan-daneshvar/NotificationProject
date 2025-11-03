@@ -9,5 +9,6 @@ namespace NotificationProject.Service.IService
         Task<IEnumerable<Notification>> GetNotificationsAsync(int? userId, int skip = 0, int take = 50);
         Task<Notification?> GetNotificationById(int Id);
         Task<NotificationChannel> GetDefaultNotificationChannel();
+        Task ChangeDefaultNotificationChannelAsync(NotificationChannel notificationChannel);
     }
 }
