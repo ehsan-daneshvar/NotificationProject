@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NotificationProject.Data;
 using NotificationProject.Repository;
 using NotificationProject.Repository.IRepository;
@@ -12,7 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options=>
+{
+    //Document For V1
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1.0",
+        Title = "Notification Module",
+        Description = "API For Notification Module",
+    });
+}
+);
+
 
 //DataBaseContext For SqlServer
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
