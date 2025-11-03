@@ -17,9 +17,9 @@ namespace NotificationProject.Data
             {
                 entity.HasKey(e => e.Id);
                 //PostgreSQL
-                //entity.Property(e => e.CreatedAt).HasDefaultValueSql("now()");
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("now()");
                 //SQL Server
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+                //entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
 
 

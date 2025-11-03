@@ -62,7 +62,7 @@ namespace NotificationProject.Service
             {
                 await sender.SendAsync(notification);
                 notification.Status = NotificationStatus.Sent;
-                notification.SentAt = DateTime.Now;
+                notification.SentAt = DateTime.UtcNow;
                 await _notificationRepository.UpdateAsync(notification);
                 _logger.LogInformation("Notification with Id : {NotificationId} sent successfully", notification.Id);
             }
