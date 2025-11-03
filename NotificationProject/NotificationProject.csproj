@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Models\DTO\" />
+    <Folder Include="Service\" />
+    <Folder Include="Repository\" />
   </ItemGroup>
 
 </Project>
