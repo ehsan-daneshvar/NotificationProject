@@ -7,7 +7,7 @@ namespace NotificationProject.Models
     {
         [Key]
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
         public NotificationChannel Channel { get; set; }
